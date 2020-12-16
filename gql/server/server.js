@@ -1,25 +1,24 @@
 const express = require("express");
 const { ApolloServer } = require("apollo-server-express");
-const http = require("http"); // From Nodejs Core, builds a separate http for the backend
-
+const http = require("http");
+const path = require("path"); // From Nodejs Core, builds a separate http for the backend
+const { makeExecutableSchema } = require("graphql-tools");
+const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
+const { loadFilesSync } = require("@graphql-tools/load-files");
 require("dotenv").config(); // Able to use environment variable '.env' file
 
 // Express server here
 const app = express();
 
-// types: Query/Mutation/Subscription
-// Int! indicates that it can not be null but integer
-const typeDefs = `
-    type Query {
-        totalPosts: Int!
-    }
-`;
-// resolvers : Objects
-const resolvers = {
-  Query: {
-    totalPosts: () => 42,
-  },
-};
+// typeDefs
+const typeDefs = mergeTypeDefs(
+  loadFilesSync(path.join(__dirname, "./typeDefs"))
+);
+
+// resolvers
+const resolvers = mergeResolvers(
+  loadFilesSync(path.join(__dirname, "./resolvers"))
+);
 
 // graphql server
 const apolloServer = new ApolloServer({
