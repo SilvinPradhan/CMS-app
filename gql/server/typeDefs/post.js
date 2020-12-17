@@ -1,6 +1,7 @@
 const { gql } = require("apollo-server-express");
 
 module.exports = gql`
+  #Schemas
   type Post {
     id: ID!
     title: String!
@@ -10,5 +11,10 @@ module.exports = gql`
   type Query {
     totalPosts: Int!
     allPosts: [Post!]
+  }
+
+  # mutations
+  type Mutation {
+    newPost(title: String!, description: String!): Post!
   }
 `;
