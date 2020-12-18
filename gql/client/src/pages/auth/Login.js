@@ -13,7 +13,7 @@ export const Login = () => {
       <div className="row p-5">
         <h4>Login</h4>
         <form onSubmit={handleSubmit}>
-          <div class="form-group">
+          <div className="form-group">
             <label>Email address</label>
             <input
               type="email"
