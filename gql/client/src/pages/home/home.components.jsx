@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { gql } from "apollo-boost";
 import { useQuery, useLazyQuery } from "@apollo/react-hooks"
 import { AuthContext } from '../../context/authContext'
-// import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom"
 
 const GET_ALL_POSTS = gql`
     {
@@ -20,7 +20,7 @@ const Home = () => {
     // access context here
     const { state, dispatch } = useContext(AuthContext);
     // React router dom 
-    // let history = useHistory();
+    let history = useHistory();
     const updateUserName = () => {
         dispatch({
             type: "LOGGED_IN_USER",
@@ -57,6 +57,10 @@ const Home = () => {
                 {JSON.stringify(state.user)}
             </div>
             <button onClick={updateUserName} className="btn btn-primary">Change user name</button>
+            <hr />
+            {
+                JSON.stringify(history)
+            }
         </>
     );
 };
